@@ -1,0 +1,24 @@
+type Point @entity {
+  id: Bytes! # hash(address, project)
+  balance: BigInt!
+  weightBalance: BigInt!
+  address: Bytes!
+  timeWeightAmountIn: BigInt!
+  timeWeightAmountOut: BigInt!
+}
+
+type TotalPoint @entity {
+  id: Bytes! # hash(project)
+  totalBalance: BigInt!
+  totalWeightBalance: BigInt!
+  totalTimeWeightAmountIn: BigInt!
+  totalTimeWeightAmountOut: BigInt!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockTimestamp: BigInt!
+}

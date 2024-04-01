@@ -1,0 +1,30 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+# magpie 4 tokens
+  - kind: ethereum
+    name: puffETH
+    network: mainnet
+    source:
+      address: "0xD9A442856C234a39a81a089C06451EBAa4306a72"
+      abi: ERC20
+      startBlock: 19128052
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Point
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/puffer/index.ts
+
+  
