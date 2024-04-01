@@ -1,5 +1,5 @@
 import { Transfer as TransferEvent } from "../../generated/puffETH/ERC20";
-import { ADDRESS_ZERO, ADDRESS_ZKNOVA_PUFFERETH } from "../utils/constants";
+import { ADDRESS_ZERO, ADDRESS_ZKNOVA_PUFFERETH ,PUFFERETH} from "../utils/constants";
 import {
   loadOrCreatePoint,
   toLowerCase,
@@ -17,11 +17,8 @@ import { Transfer } from "../../generated/schema";
  * @param event 
  */
 export function handleTransfer(event: TransferEvent): void {
-  let entity = new Transfer(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
+
   const stakeToken = toLowerCase(event.address);
-  const tokenAddress = stakeToken.toHexString();
   const transferShares = event.params.value;
   const from = toLowerCase(event.params.from);
   const to = toLowerCase(event.params.to);
@@ -34,22 +31,14 @@ export function handleTransfer(event: TransferEvent): void {
   // blockNumber: BigInt! 
   // blockTimestamp: BigInt!
   // transactionHash: Bytes!
-  entity.from = from;
-  entity.to = to;
-  entity.value = transferShares;
-  entity.blockTimestamp = event.block.timestamp;
-  const totalPoint = loadOrCreateTotalPoint();
 
-  if (to.notEqual(ADDRESS_ZERO) && to.equals(ADDRESS_ZKNOVA_PUFFERETH)) {
+
+  if (to.equals(ADDRESS_ZKNOVA_PUFFERETH) && stakeToken.equals(PUFFERETH)) {
     // mint or receive token from others
-    const point = loadOrCreatePoint(to);
+    const point = loadOrCreatePoint(stakeToken);
     point.timeWeightAmountIn = point.timeWeightAmountIn.plus(increase);
     point.balance = point.balance.plus(transferShares);
     point.weightBalance = point.balance;
-    
     point.save();
   } 
-
-  totalPoint.save();
-  entity.save();
 }
