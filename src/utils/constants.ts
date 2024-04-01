@@ -15,6 +15,9 @@ export const ADDRESS_ZERO = Address.fromHexString(
 export const ADDRESS_ZERO_BYTES = Bytes.fromHexString(
   "0x0000000000000000000000000000000000000000".toLowerCase()
 );
-export const ADDRESS_ZKNOVA_PUFFERETH = Bytes.fromHexString(
+export const ADDRESS_ZKNOVA_PUFFERETH = Address.fromHexString(
   "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6".toLowerCase()
+);
+export const PUFFERETH = Address.fromHexString(
+  "0xD9A442856C234a39a81a089C06451EBAa4306a72".toLowerCase()
 );

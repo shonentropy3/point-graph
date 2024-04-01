@@ -9,7 +9,7 @@ dataSources:
     name: puffETH
     network: mainnet
     source:
-      address: "0xD9A442856C234a39a81a089C06451EBAa4306a72"
+      address: "0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"
       abi: ERC20
       startBlock: 19128052
     mapping:
